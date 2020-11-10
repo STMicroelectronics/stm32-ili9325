@@ -2,13 +2,13 @@
   ******************************************************************************
   * @file    ili9325.c
   * @author  MCD Application Team
-  * @version V1.2.2
-  * @date    02-December-2014
+  * @version V1.2.3
+  * @date    03-May-2016
   * @brief   This file includes the LCD driver for ILI9325 LCD.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2014 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -323,14 +323,8 @@ uint16_t ili9325_ReadPixel(uint16_t Xpos, uint16_t Ypos)
   /* Set Cursor */
   ili9325_SetCursor(Xpos, Ypos);
   
-  /* Prepare to write GRAM */
-  LCD_IO_WriteReg(LCD_REG_34);
-  
-  /* Dummy read */
-  LCD_IO_ReadData(0x00);
-  
   /* Read 16-bit Reg */
-  return (LCD_IO_ReadData(0x00));
+  return (LCD_IO_ReadData(LCD_REG_34));
 }
 
 /**
@@ -353,12 +347,9 @@ void ili9325_WriteReg(uint8_t LCDReg, uint16_t LCDRegValue)
   * @retval LCD Register Value.
   */
 uint16_t ili9325_ReadReg(uint8_t LCDReg)
-{
-  /* Write 16-bit Index (then Read Reg) */
-  LCD_IO_WriteReg(LCDReg);
-  
+{ 
   /* Read 16-bit Reg */
-  return (LCD_IO_ReadData(0x00));
+  return (LCD_IO_ReadData(LCDReg));
 }
 
 /**
